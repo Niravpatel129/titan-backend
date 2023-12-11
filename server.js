@@ -17,7 +17,7 @@ mongoose
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Route setup
-app.use('/api/items', itemRoutes);
+app.use('/api/orders', require('./routes/orders.route.js'));
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
