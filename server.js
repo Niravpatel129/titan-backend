@@ -2,12 +2,20 @@ const express = require('express');
 const mongoose = require('mongoose');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swaggerDocs.js');
-const itemRoutes = require('./routes/item.routes.js');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 
 app.use(express.json());
+
+app.use(
+  cors({
+    credentials: true,
+    exposedHeaders: ['Access-Control-Allow-Credentials'],
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
+  }),
+);
 
 mongoose
   .connect(process.env.MONGO_CONNECTION_STRING, {})
