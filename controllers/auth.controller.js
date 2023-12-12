@@ -20,7 +20,8 @@ exports.signup = async (req, res) => {
 
     res.status(201).send({ message: 'User created successfully', token });
   } catch (error) {
-    res.status(401).send('Invalid email or password');
+    console.log('🚀  error:', error);
+    res.status(500).send('Server error');
   }
 };
 
