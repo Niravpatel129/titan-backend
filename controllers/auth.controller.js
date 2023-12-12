@@ -19,7 +19,7 @@ exports.signup = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
     res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true });
 
-    res.status(201).send({ message: 'User created successfully', token });
+    res.status(201).send({ message: 'User created successfully', user, token });
   } catch (error) {
     console.log('🚀  error:', error);
     res.status(500).send('Server error');
@@ -42,7 +42,7 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
     res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true });
 
-    res.status(200).send({ message: 'User logged in successfully', token });
+    res.status(200).send({ message: 'User logged in successfully', user, token });
   } catch (error) {
     res.status(500).send('Server error');
   }
