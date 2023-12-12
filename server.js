@@ -15,7 +15,7 @@ app.use(
   cors({
     credentials: true,
     exposedHeaders: ['Access-Control-Allow-Credentials'],
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'titan-icy.netlify.app'],
   }),
 );
 
