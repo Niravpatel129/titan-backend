@@ -4,7 +4,7 @@ const saltRounds = 10;
 
 exports.signup = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
     let user = await User.findOne({ email: email });
 
     if (user) {
@@ -12,7 +12,7 @@ exports.signup = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    user = new User({ email, password: hashedPassword });
+    user = new User({ email, password: hashedPassword, name });
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
