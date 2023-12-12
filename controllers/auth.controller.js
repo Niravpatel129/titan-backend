@@ -15,7 +15,8 @@ exports.signup = async (req, res) => {
     user = new User({ email, password: hashedPassword });
     await user.save();
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true });
 
     res.status(201).send({ message: 'User created successfully', token });
   } catch (error) {
@@ -36,7 +37,8 @@ exports.login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).send('Invalid email or password');
     }
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true });
 
     res.status(200).send({ message: 'User logged in successfully', token });
   } catch (error) {
