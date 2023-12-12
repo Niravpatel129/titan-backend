@@ -15,7 +15,9 @@ exports.signup = async (req, res) => {
     user = new User({ email, password: hashedPassword });
     await user.save();
 
-    res.status(201).send('User created successfully');
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(201).send({ message: 'User created successfully', token });
   } catch (error) {
     res.status(500).send('Server error');
   }
@@ -34,8 +36,9 @@ exports.login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).send('Invalid email or password');
     }
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(200).send('User logged in successfully');
+    res.status(200).send({ message: 'User logged in successfully', token });
   } catch (error) {
     res.status(500).send('Server error');
   }
