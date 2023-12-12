@@ -44,6 +44,7 @@ exports.login = async (req, res) => {
 
     res.status(200).send({ message: 'User logged in successfully', user, token });
   } catch (error) {
+    console.log('🚀  error:', error);
     res.status(500).send('Server error');
   }
 };
