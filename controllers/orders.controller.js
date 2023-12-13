@@ -1,4 +1,5 @@
 const axios = require('axios');
+const readyOrdersModel = require('../models/readyOrders.model');
 
 const fetchPendingOrders = async (req, res) => {
   const productsIds = new Set();
@@ -50,6 +51,25 @@ const fetchPendingOrders = async (req, res) => {
     });
 };
 
+const fetchPrintedOrders = async (req, res) => {
+  const readyOrders = await readyOrdersModel.find({});
+
+  const orderIds = readyOrders.map((order) => order.shopifyOrderId);
+  console.log('🚀  productsIds:', orderIds);
+
+  const orders = await axios.get(
+    `https://icy-toronto.myshopify.com/admin/api/2023-04/orders.json?ids=${orderIds.join(',')}}`,
+    {
+      headers: {
+        'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+      },
+    },
+  );
+
+  res.send(orders.data?.orders);
+};
+
 module.exports = {
   fetchPendingOrders,
+  fetchPrintedOrders,
 };

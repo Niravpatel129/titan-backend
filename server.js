@@ -29,6 +29,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Route setup
 app.use('/api/orders', require('./routes/orders.route.js'));
 app.use('/api/auth', require('./routes/auth.route.js'));
+app.use('/api/readyOrders', require('./routes/readyOrders.route.js'));
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
